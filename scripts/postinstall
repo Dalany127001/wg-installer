@@ -1,0 +1,26 @@
+# WireGuard Installer for macOS (Apple Silicon)
+
+A lightweight and automated installer for setting up **WireGuard tools** on macOS systems (optimized for Apple Silicon M-series chips such as M1/M2/M3/M4).
+
+This script automates dependency installation, system validation, and WireGuard setup using Homebrew.
+
+---
+
+## 🚀 Features
+
+- ✔ Automatic system architecture detection
+- ✔ Homebrew installation (if missing)
+- ✔ WireGuard tools installation via Homebrew
+- ✔ Installation verification (`wg`, `wg-quick`)
+- ✔ Clean logging with colored output
+- ✔ macOS Apple Silicon optimization
+
+---
+
+## 📦 Installation
+
+You can install and run the script directly from this GitHub repository:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/<username>/<repo>/main/install.sh | bash
+

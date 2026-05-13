@@ -1,0 +1,37 @@
+#!/bin/bash
+# =============================================================================
+# preinstall — runs as root before payload is laid down
+# =============================================================================
+set -euo pipefail
+
+LOG="/var/log/wireguard-install.log"
+exec > >(tee -a "$LOG") 2>&1
+
+echo ""
+echo "============================================"
+echo " WireGuard/Tunnelblick Pre-flight — $(date)"
+echo "============================================"
+
+log()  { echo "[INFO]  $*"; }
+die()  { echo "[ERROR] $*"; exit 1; }
+
+# ── macOS version (require Ventura 13+ ) ──────────────────────────────────────
+OS_VER=$(sw_vers -productVersion)
+OS_MAJOR=$(echo "$OS_VER" | cut -d. -f1)
+[ "$OS_MAJOR" -ge 13 ] || die "macOS $OS_VER not supported. Requires 13 (Ventura) or later."
+log "macOS $OS_VER — OK"
+
+# ── Architecture ──────────────────────────────────────────────────────────────
+ARCH=$(uname -m)
+[ "$ARCH" = "arm64" ] || log "WARNING: expected arm64, got $ARCH"
+log "Architecture: $ARCH — OK"
+
+# ── Internet ──────────────────────────────────────────────────────────────────
+curl -sf --max-time 10 https://tunnelblick.net > /dev/null 2>&1 \
+  || die "No internet access. This installer needs to download Tunnelblick."
+log "Internet — OK"
+
+
+
+log "Pre-flight passed."
+exit 0
